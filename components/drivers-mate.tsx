@@ -62,8 +62,50 @@ export default function DriversMate() {
   return (
     <div className="min-h-screen bg-[#ff914d] p-8">
       <div className="max-w-4xl mx-auto">
-        <h1>DriversMate</h1>
-        <p>This is a version with imports and state management.</p>
+        <Image src="/DriversMateLogo.png" alt="DriversMate Logo" width={300} height={100} className="mb-8" />
+        <Card>
+          <CardContent>
+            <h1 className="text-2xl font-bold mb-4">DriversMate</h1>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="file-upload">Upload File</Label>
+                <div className="flex items-center space-x-2">
+                  <Button type="button" onClick={() => document.getElementById('file-upload')?.click()}>
+                    <Upload className="w-4 h-4 mr-2" />
+                    Choose File
+                  </Button>
+                  <input
+                    id="file-upload"
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileChange}
+                    accept=".xlsx"
+                  />
+                  {file && <span>{file.name}</span>}
+                </div>
+              </div>
+              <RadioGroup value={processOption} onValueChange={setProcessOption}>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="full" id="full" />
+                  <Label htmlFor="full">Full Roster</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="daysOff" id="daysOff" />
+                  <Label htmlFor="daysOff">Days Off Only</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="workDays" id="workDays" />
+                  <Label htmlFor="workDays">Work Days Only</Label>
+                </div>
+              </RadioGroup>
+              <Button type="submit" disabled={isProcessing}>
+                <FileUp className="w-4 h-4 mr-2" />
+                Process File
+              </Button>
+              {isProcessing && <Progress value={progress} className="w-full" />}
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
