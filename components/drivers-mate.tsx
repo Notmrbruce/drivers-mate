@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Upload, FileUp } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -52,7 +53,7 @@ export default function DriversMate() {
   return (
     <div className="min-h-screen bg-[#FF9966] p-8">
       <div className="max-w-4xl mx-auto">
-        <img src="/placeholder.svg?height=100&width=300" alt="DriversMate Logo" className="mb-8" />
+        <Image src="/placeholder.svg" alt="DriversMate Logo" width={300} height={100} className="mb-8" />
         <div className="flex flex-col md:flex-row gap-8">
           <Card className="flex-1 bg-white/90">
             <CardContent className="p-6">
@@ -64,7 +65,7 @@ export default function DriversMate() {
                 <li>Open that file in excel & save as excel work book file (.xlsx)</li>
                 <li>Upload that file to this site</li>
                 <li>Once file is returned to you simply rename it to remove the .xlsx and replace it with .csv</li>
-                <li>example "work.csv"</li>
+                <li>example &quot;work.csv&quot;</li>
                 <li>Upload new file to https://csv-to-ical.chimbori.com/ and set up as ios calendar</li>
               </ol>
             </CardContent>
