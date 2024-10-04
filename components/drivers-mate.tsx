@@ -71,14 +71,4 @@ export default function DriversMate() {
                   <h2 className="text-xl font-bold mb-4 text-black">Instructions</h2>
                   <ol className="list-decimal list-inside space-y-2 text-black">
                     <li>Head to tracsis & open up your work plan</li>
-                    <li>Ammend the dates so they suit your needs</li>
-                    <li>Use the export as CSV button</li>
-                    <li>Open that file in excel & save as excel work book file (.xlsx)</li>
-                    <li>Upload that file to this site</li>
-                    <li>Once file is returned to you simply rename it to remove the .xlsx and replace it with .csv</li>
-                    <li>example &quot;work.csv&quot;</li>
-                    <li>Upload new file to https://csv-to-ical.chimbori.com/ and set up as ios calendar</li>
-                  </ol>
-                </CardContent>
-              </Card>
-              <Card className="flex-1 bg-[
+                    <li
