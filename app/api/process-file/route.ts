@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { exec } from 'child_process'
-import { writeFile, unlink } from 'fs/promises'
+import { writeFile, unlink, readFile } from 'fs/promises'
 import path from 'path'
 
 export async function POST(request: NextRequest) {
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
       })
     })
 
-    const processedFile = await Bun.file(outputPath).arrayBuffer()
+    const processedFile = await readFile(outputPath)
     await unlink(filepath)
     await unlink(outputPath)
 
