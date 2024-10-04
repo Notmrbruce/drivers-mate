@@ -4,19 +4,26 @@ import { writeFile, unlink, readFile } from 'fs/promises'
 import path from 'path'
 
 export async function POST(request: NextRequest) {
+  console.log('API route called')
   const formData = await request.formData()
   const file = formData.get('file') as File
   const processOption = formData.get('processOption') as string
 
+  console.log('Process option:', processOption)
+
   if (!file) {
+    console.error('No file uploaded')
     return NextResponse.json({ error: 'No file uploaded' }, { status: 400 })
   }
+
+  console.log('File name:', file.name)
 
   const buffer = Buffer.from(await file.arrayBuffer())
   const filename = file.name
   const filepath = path.join(process.cwd(), 'tmp', filename)
 
   try {
+    console.log('Writing file to:', filepath)
     await writeFile(filepath, buffer)
 
     let scriptPath
@@ -34,7 +41,11 @@ export async function POST(request: NextRequest) {
         throw new Error('Invalid process option')
     }
 
+    console.log('Using script:', scriptPath)
+
     const outputPath = path.join(process.cwd(), 'tmp', `processed_${filename}`)
+
+    console.log('Output path:', outputPath)
 
     await new Promise((resolve, reject) => {
       exec(`python ${scriptPath} ${filepath} ${outputPath}`, (error, stdout, stderr) => {
@@ -48,9 +59,15 @@ export async function POST(request: NextRequest) {
       })
     })
 
+    console.log('Python script executed')
+
     const processedFile = await readFile(outputPath)
+    console.log('Processed file read, size:', processedFile.length)
+
     await unlink(filepath)
     await unlink(outputPath)
+
+    console.log('Temporary files deleted')
 
     return new NextResponse(processedFile, {
       headers: {
