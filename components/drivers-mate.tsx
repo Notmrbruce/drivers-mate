@@ -62,7 +62,7 @@ export default function DriversMate() {
   return (
     <div className="min-h-screen bg-[#ff914d] p-8">
       <div className="max-w-4xl mx-auto">
-        <Image src="/drivers-mate-logo.png" alt="DriversMate Logo" width={300} height={100} className="mb-8" />
+        <Image src="/DriversMateLogo.png" alt="DriversMate Logo" width={300} height={100} className="mb-8" />
         <div className="bg-white border-4 border-black rounded-lg overflow-hidden">
           <div className="p-8">
             <div className="flex flex-col md:flex-row gap-8">
@@ -81,48 +81,4 @@ export default function DriversMate() {
                   </ol>
                 </CardContent>
               </Card>
-              <Card className="flex-1 bg-[#333333] text-white">
-                <CardContent className="p-6">
-                  <h2 className="text-xl font-bold mb-4">Simple reformat tool</h2>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="flex items-center justify-center w-full">
-                      <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                          <Upload className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" />
-                          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">XLSX file (MAX. 10MB)</p>
-                        </div>
-                        <input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} accept=".xlsx" />
-                      </label>
-                    </div>
-                    {file && <p className="text-sm">{file.name}</p>}
-                    <RadioGroup value={processOption} onValueChange={setProcessOption}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="full" id="full" />
-                        <Label htmlFor="full">Full Roster - Both work & days off</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="daysOff" id="daysOff" />
-                        <Label htmlFor="daysOff">Days Off Only - Days off only useful for sharing with others</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="workDays" id="workDays" />
-                        <Label htmlFor="workDays">Work Days Only - Useful if you want to use separate colours to differentiate between days off & on in your calendar</Label>
-                      </div>
-                    </RadioGroup>
-                    <Button type="submit" className="w-full bg-green-500 hover:bg-green-600 text-white" disabled={isProcessing}>
-                      <FileUp className="mr-2 h-4 w-4" /> Process File
-                    </Button>
-                    {isProcessing && (
-                      <Progress value={progress} className="w-full" />
-                    )}
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+              <Card className="flex-1 bg-[
