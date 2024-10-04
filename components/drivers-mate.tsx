@@ -71,4 +71,4 @@ export default function DriversMate() {
                   <h2 className="text-xl font-bold mb-4 text-black">Instructions</h2>
                   <ol className="list-decimal list-inside space-y-2 text-black">
                     <li>Head to tracsis & open up your work plan</li>
-                    <li
+                    <li>Ammend the dates so they suit your needs</li>
