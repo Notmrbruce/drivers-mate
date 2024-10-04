@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/process-file.js": {
+      "runtime": "vercel-python@3.1.0"
+    }
+  },
+  "routes": [
+    { "src": "/api/process-file", "dest": "api/process-file.js" }
+  ]
+}
