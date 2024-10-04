@@ -1,20 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { VercelRequest, VercelResponse } from '@vercel/node'
 import { exec } from 'child_process'
 import { writeFile, unlink } from 'fs/promises'
 import path from 'path'
 
-export async function POST(request: NextRequest) {
-  const formData = await request.formData()
-  const file = formData.get('file') as File
-  const processOption = formData.get('processOption') as string
-
-  if (!file) {
-    return NextResponse.json({ error: 'No file uploaded' }, { status: 400 })
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer())
-  const filename = file.name
-  const filepath = path.join(process.cwd(), 'tmp', filename)
+  const { file, processOption } = req.body
+
+  if (!file) {
+    return res.status(400).json({ error: 'No file uploaded' })
+  }
+
+  const buffer = Buffer.from(file, 'base64')
+  const filename = 'uploaded_file.xlsx'
+  const filepath = path.join('/tmp', filename)
 
   try {
     await writeFile(filepath, buffer)
@@ -34,7 +36,7 @@ export async function POST(request: NextRequest) {
         throw new Error('Invalid process option')
     }
 
-    const outputPath = path.join(process.cwd(), 'tmp', `processed_${filename}`)
+    const outputPath = path.join('/tmp', `processed_${filename}`)
 
     await new Promise((resolve, reject) => {
       exec(`python ${scriptPath} ${filepath} ${outputPath}`, (error, stdout, stderr) => {
@@ -52,14 +54,11 @@ export async function POST(request: NextRequest) {
     await unlink(filepath)
     await unlink(outputPath)
 
-    return new NextResponse(processedFile, {
-      headers: {
-        'Content-Disposition': `attachment; filename="processed_${filename}"`,
-        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      },
-    })
+    res.setHeader('Content-Disposition', `attachment; filename="processed_${filename}"`)
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    return res.send(Buffer.from(processedFile))
   } catch (error) {
     console.error('Error processing file:', error)
-    return NextResponse.json({ error: 'Error processing file' }, { status: 500 })
+    return res.status(500).json({ error: 'Error processing file' })
   }
 }
